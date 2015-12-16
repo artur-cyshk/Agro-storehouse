@@ -1,0 +1,99 @@
+<ng-include src="'templates/header.html'"></ng-include>
+<div ng-cloak ng-if="visible">
+	<div class="page-header">
+	  <h1>Product <small>{{product.name}}</small></h1>
+	</div>
+	<div class="panel panel-default">
+	  <div class="panel-heading">Product information
+		<button ng-if="canEdit" style="float:right" ng-click="getProductInfo()" data-toggle="modal" data-target="#productEditModal" class="btn btn-info">Edit product</button>
+		<div style="clear:both"></div>
+	  </div>
+	  <div class="panel-body">
+	  	<b>name</b> : {{product.name}}<br>
+	    <b>price </b>: {{product.price}}<br>
+	    <b>description</b> : {{product.description}}<br>
+	    <b>consists</b> : {{product.consists}}  <span ng-if="!product.consists">-</span><br>
+	    <b>providers</b> : {{product.providers}}  <span ng-if="!product.providers">-</span><br>
+	    <b>countries</b> : {{product.countries}}  <span ng-if="!product.countries">-</span><br>
+	  </div>
+	</div>
+	<div id="productEditModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="closeModalProd close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Edit product</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form class="form-horizontal" ng-submit="edit()">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+						   	<div class="input-group">
+						        <span class="input-group-addon" id="name-addon">
+								  	<span class="glyphicon glyphicon-briefcase"></span>
+								</span>
+								<input type="text" required class="form-control" id="name" aria-describedby="name-addon" ng-model="newEditProduct.name" placeholder="name">
+
+							</div>
+							<div class="errorDiv" ng-if="nameError">Name is already taken</div>
+						</div>
+				    </div>
+					<div class="form-group">
+						<label for="date" class="col-sm-2 control-label">Price</label>
+						<div class="col-sm-10">
+						   	<div class="input-group">
+								<span class="input-group-addon" id="price-addon">
+								  	<span class="glyphicon glyphicon-euro"></span>
+						    	</span>
+						      	<input type="number" required class="form-control" id="price" aria-describedby="price-addon" ng-model="newEditProduct.price" placeholder="price">
+					      	</div>
+					    </div>
+					</div>
+					<div class="form-group">
+						<label for="date" class="col-sm-2 control-label">Description</label>
+						<div class="col-sm-10">
+						      	<input type="text" required class="form-control" id="description" ng-model="newEditProduct.description" placeholder="description">
+					    </div>
+					</div>
+					<div class="form-group">
+						<label for="date" class="col-sm-2 control-label">Countries</label>
+						<div class="col-sm-10">
+						   		<select class="form-control" ng-model="newEditProduct.country">
+						   			<option ng-repeat="country in editProduct.countries" value="{{country.country_id}}">{{country.name}}</option>
+						   		</select>
+					    </div>
+					</div>
+					<div class="form-group">
+						<label for="date" class="col-sm-2 control-label">Consist</label>
+						<div class="col-sm-10">
+						   		<select style="width:100%" class="form-control" ng-model="newEditProduct.consist">
+						   			<option ng-repeat="item in editProduct.consist" value="{{item.consist_id}}">{{item.name}}</option>
+						   		</select>
+					    </div>
+					</div>
+					<div class="form-group">
+						<label for="date" class="col-sm-2 control-label">Providers</label>
+						<div class="col-sm-10">
+						   		<select class="form-control" ng-model="newEditProduct.provider">
+						   			<option ng-repeat="provider in editProduct.providers" value="{{provider.provider_id}}">{{provider.name}}</option>
+						   		</select>
+					    </div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+						    <button type="submit" class="btn btn-primary">Edit product</button>
+						</div>
+					</div>
+				</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+</div>

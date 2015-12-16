@@ -1,0 +1,199 @@
+<ng-include src="'templates/header.html'"></ng-include>
+<div  ng-cloak ng-if="visible">
+	<div class="page-header">
+	  <h1 style="padding-left:5px;text-transform:uppercase">{{company[0].name}} <small>{{company[0].entry_date}} ( {{company[0].description}} ) </small></h1>
+	</div>
+	<div class="row-fluid">
+		<div class="col-md-8">
+			<div class="panel panel-default">
+			 	<div class="panel-heading">
+			 		Storehouses
+					<button ng-if="canEdit" class="btn btn-primary" data-toggle="modal" data-target="#newStorehouse">ADD</button>
+			 		</div>
+				 	<div class="panel-body">
+				 		<div class="alert alert-danger" style="text-align:center" ng-if="!company[3].length">No storehouse </div>		
+						<div ng-repeat="storehouse in company[3]" style="margin:5px;width:100%;text-align:center;">
+							<div style="width:70% ;;margin:0 auto;" >
+								NAME:<b><a ng-href="#/storehouse/{{storehouse.storehouse_id}}">{{storehouse.storehouse_name}}</a><b><br>
+								ADDRESS:<b>{{storehouse.address}}</b>
+								<span ng-repeat="city in storehouse.cities">
+									<div>
+										city: {{city.city_name}}
+										building date: {{city.city_building_date}}
+									</div>
+								</span>
+							</div>
+							<button style="width:40%" class="btn btn-danger" ng-if="canEdit" ng-click="deleteStorehouse(storehouse.storehouse_id)"><span class="glyphicon glyphicon-minus"></span
+							>   REMOVE {{storehouse.storehouse_name}}</button>
+						</div>
+					</div>
+			</div>
+										<div id="newStorehouse" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="closeModal close" data-dismiss="modal">&times;</button>
+							        <h4 class="modal-title">New Storehouse</h4>
+							      </div>
+							      <div class="modal-body">
+							        <form class="form-horizontal" ng-submit="addStorehouse()">
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">Name</label>
+											<div class="col-sm-10">
+											   	<div class="input-group">
+											        <span class="input-group-addon" id="name-addon">
+													  	<span class="glyphicon glyphicon-briefcase"></span>
+													</span>
+													<input type="text" required class="form-control" id="name" aria-describedby="name-addon" ng-model="newStorehouse.name" placeholder="name">
+												</div>
+											</div>
+									    </div>
+										<div class="form-group">
+											<label for="date" class="col-sm-2 control-label">Address</label>
+											<div class="col-sm-10">
+											   	<div class="input-group">
+													<span class="input-group-addon" id="home-addon">
+													  	<span class="glyphicon glyphicon-home"></span>
+											    	</span>
+											      	<input type="text" required class="form-control" id="date" aria-describedby="home-addon" ng-model="newStorehouse.address" placeholder="address">
+										      	</div>
+										    </div>
+										</div>
+										<div class="form-group">
+										    <label for="role" class="col-sm-2 control-label">City</label>
+											    <div class="col-sm-10">
+										  	        <select multiple ng-model="newStorehouse.city" name="city" id="city">
+														<option value="{{city.city_id}}" ng-repeat="city in cities">{{city.name}}</option>
+													</select>
+												</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-offset-2 col-sm-10">
+											    <button type="submit" class="btn btn-primary">Add Storehouse</button>
+											</div>
+										</div>
+									</form>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							      </div>
+							    </div>
+
+							  </div>
+							</div>
+			<div class="commentsDiv">
+				<div class="addComment">
+					<div class="input-group" style="width:60%;margin: 0 auto;">
+					<input class="form-control"  type="text" ng-model="commentString">
+					<button class="btn btn-primary" style="width:100% ;margin-top:5px;" ng-click="addComment()">ADD COMMENT</button>
+					</div>
+				</div>
+				<div ng-repeat="comment in company[2]" style="width:60%;margin: 20px auto;text-align:center">
+				<div class="comment" style="display:inline-block;width:80%;margin: 20px auto;text-align:center">
+					<b>{{comment.name}}:</b>
+					<span style="margin:0 auto;display:block;width:70%;word-wrap:break-word"><i>{{comment.message}}</i></span>
+					({{comment.add_date}})
+				</div>
+				<button ng-if="canEdit" class="btn btn-danger" ng-click="deleteComment(comment.message_id)"> <span class="glyphicon glyphicon-minus"></span> </button>
+				</div>
+			</div>
+		</div>
+		<div class=" emp col-md-4 text-center">	
+		<h3>EMPLOYEE</h3>
+					<button style="width:100%" ng-if="canEdit" class="btn btn-success" data-toggle="modal" data-target="#newEmp" >
+						<span class="glyphicon glyphicon-plus"></span>  ADD NEW EMPLOYEE
+					</button>
+					<div style="background:#A2A2A2 ;margin:5px" ng-repeat="employee in company[1]">
+						<table class="emptable">
+							<tbody>
+								<tr>
+									<td>
+										Name
+									</td>
+									<td>
+										{{employee.name}}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Entry date
+									</td>
+									<td>
+										{{employee.entry_date}}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Role
+									</td>
+									<td>
+										{{employee.role}}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<button class="btn empButton btn-primary" ng-if="canEdit" ng-click="deleteEmployee(employee.employee_id)">
+							remove {{employee.name}}
+						</button>
+					</div>
+					<!-- Modal -->
+					<div id="newEmp" class="modal fade" role="dialog">
+					  <div class="modal-dialog">
+
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="closeModal close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">New Employee</h4>
+					      </div>
+					      <div class="modal-body">
+					        <form class="form-horizontal" ng-submit="addNewEmployee()">
+								<div class="form-group">
+									<label for="name" class="col-sm-2 control-label">Name</label>
+									<div class="col-sm-10">
+									   	<div class="input-group">
+									        <span class="input-group-addon" id="name-addon">
+											  	<span class="glyphicon glyphicon-briefcase"></span>
+											</span>
+											<input type="text" ng-change="makeValid()" required class="form-control" id="name" aria-describedby="name-addon" ng-model="newEmployee.name" placeholder="name">
+										</div>
+									</div>
+							    </div>
+								<div class="form-group">
+									<label for="date" class="col-sm-2 control-label">Date</label>
+									<div class="col-sm-10">
+									   	<div class="input-group">
+											<span class="input-group-addon" id="date-addon">
+											  	<span class="glyphicon glyphicon glyphicon-calendar"></span>
+									    	</span>
+									      	<input type="date" required class="form-control" id="date" aria-describedby="date-addon" ng-model="newEmployee.entry_date" placeholder="date">
+								      	</div>
+								    </div>
+								</div>
+								<div class="form-group">
+								    <label for="role" class="col-sm-2 control-label">Role</label>
+									    <div class="col-sm-10">
+								  	        <input type="text" required class="form-control" id="role" aria-describedby="role-addon" ng-model="newEmployee.role" placeholder="role">
+										</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+									    <button type="submit" class="btn btn-primary">Add epmloyee</button>
+									</div>
+								</div>
+							</form>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+
+					  </div>
+					</div>
+		</div>
+		
+	</div>
+	
+
+	
+</div>

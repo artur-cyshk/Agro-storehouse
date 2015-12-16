@@ -1,0 +1,77 @@
+<div ng-controller="ChangeProfileCtrl">
+  <div ng-if="visible" ng-cloak>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" ng-href="#/companies">
+            <span style="font-size:26px">AGRO STOREHOUSE<span class="glyphicon glyphicon-home"></span></span>
+          </a>
+        </div>
+          <ul class="nav navbar-nav navbar-right">
+    	      	<li><a><button class="btn btn-primary" data-toggle="modal" data-target="#profileModal">{{myUsername}}'s PROFILE</button></a></li>
+    	      	<li><a ng-href="/logout"><button class="btn btn-danger">LOGOUT</button></a></li>
+          </ul>
+      </div>
+    </nav>
+    <div id="profileModal"  class="modal fade" role="dialog">
+      <div class="modal-dialog" style="min-width:302px">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="closeProfmod close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Profile</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">Username</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <span class="input-group-addon" id="name-addon">
+                        <span class="glyphicon glyphicon-user"></span>
+                      </span>
+                      <input type="text" ng-change="checkUsernames()" class="form-control" id="name" aria-describedby="name-addon" ng-model="usernameToEdit" placeholder="username">
+                    </div>
+                    <div class="errorDiv" ng-if="usernameError">Username is already taken</div>
+                    <div class="errorDiv" ng-if="usernameEmpty">it's required</div>
+                    <div class="errorDiv" ng-if="usernameMinLength">Min length: 4</div>
+                    <button style="width:100%; margin-top:10px" ng-click="changeUsername()" class="btn btn-success">CHANGE USERNAME</button>
+                  </div>
+               </div>
+              <div class="form-group">
+                <label for="pass" class="col-sm-2 control-label">Password</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <span class="input-group-addon" id="name-addon">
+                        <span class="glyphicon glyphicon-lock"></span>
+                      </span>
+                      <input type="password" ng-change="checkPasswords()" class="form-control" id="pass" aria-describedby="name-addon" ng-model="firstPassword" placeholder="password">
+                    </div>
+                  </div>
+               </div>
+              <div class="form-group">
+                <label for="pass" class="col-sm-2 control-label">Repeat password</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <span class="input-group-addon" id="name-addon">
+                        <span class="glyphicon glyphicon-lock"></span>
+                      </span>
+                      <input type="password" ng-change="checkPasswords()" class="form-control" id="pass" aria-describedby="name-addon" ng-model="secondPassword" placeholder="password">
+                    </div>
+                    <div class="errorDiv" ng-if="passwordsEmpty">it's required</div>
+                    <div class="errorDiv" ng-if="minLengthErr">Min length: 8</div>
+                    <div class="errorDiv" ng-if="notEqual">Passwords are not equal</div>
+                    <button style="width:100%; margin-top:10px" class="btn btn-primary" ng-click="changePassword()">change password</button>
+                  </div>
+                  
+               </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

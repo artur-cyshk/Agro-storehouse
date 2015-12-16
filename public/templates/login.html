@@ -1,0 +1,80 @@
+<div ng-hide="hide" class="login">
+	<div class="row loginForm"> 
+		<form class="form-horizontal col-md-6 col-md-offset-3">
+			<div class="form-group text-center">
+			    <label for="username" class="col-md-3 control-label">Username</label>
+			    <div class="col-md-7">
+			      <input type="text" ng-change="makeValid()" ng-model="user.username" class="form-control" id="username" placeholder="username">
+			      <div class="errorDiv" ng-hide="!error.username">Username does not exist.</div>
+			    </div>
+			</div>
+			
+			<div class="form-group">
+			    <label for="password" class="col-md-3 control-label">Password</label>
+			    <div class="col-md-7">
+			      <input type="password" ng-change="makeValid()" ng-model="user.password" class="form-control" id="password" placeholder="password">
+			      <div class="errorDiv" ng-hide="!error.password">Password does not correct.</div>
+			    </div>
+			</div>
+			<div class="form-group">
+					<div class="col-xs-12 col-sm-3 col-md-offset-3 col-md-3">
+				    	<button class="btn btn-success col-xs-12 col-md-12" ng-click="login()"> Log In </button>
+				    </div>
+				    <div class="col-xs-12 col-sm-3 col-sm-offset-6 col-md-offset-1 col-md-3">
+				    	<button class="btn btn-danger  col-xs-12 col-md-12" data-toggle="modal" data-target="#registrationModal"> Sign Up</button>
+				    </div>
+				</div>
+		</form>
+	</div>
+	<div id="registrationModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Registration</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form class="form-horizontal text-center">
+		        <div class="form-group">
+				    <label for="username" class="col-sm-2 control-label">Username</label>
+				    <div class="col-sm-10">
+				      <input type="text" required class="form-control" id="username" placeholder="username" name="usernameToRegistr" ng-change="checkUsernames()" ng-model="usernameToRegistr">
+				      <div class="errorDiv" ng-hide="!usernameError">Username is already taken.</div>
+				      <div class="errorDiv" ng-hide="!usernameMinLength">Min length : 4.</div>
+				    </div>
+
+				</div>
+				<div class="form-group">
+				    <label for="password" class="col-sm-2 control-label">password</label>
+				    <div class="col-sm-10">
+				      <input type="password" required class="form-control" id="password" placeholder="password"  ng-change="checkPasswords()" ng-model="firstPassword">
+				    </div>
+				</div>
+				<div class="form-group">
+				    <label for="secondPassword" class="col-sm-2 control-label">Repeat password</label>
+				    <div class="col-sm-10">
+				      	<input type="password"  required class="form-control" id="secondPassword" placeholder="repeat password"  ng-change="checkPasswords()" ng-model="secondPassword">
+						<div class="errorDiv" ng-hide="!notEqual">Passwords are not equal.</div>	
+						<div class="errorDiv" ng-hide="!minLengthErr">Min length : 8.</div>	
+				    </div>
+				    
+				</div>
+				<br>
+				<div class="form-group">
+					<button class="btn btn-primary" style="width:90% ; margin:0 auto" ng-click="registration()">sing up</button>	
+				</div>
+				
+			</form>
+			
+
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+ 

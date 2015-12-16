@@ -1,0 +1,107 @@
+textarea{
+	resize:none;
+}
+.companyBtnCantEdit{
+	width:100%;
+}
+.product{
+	background: aliceblue;
+	margin:10px;
+    padding: 10px;
+    border: 1px solid #BDBDBD;
+    border-radius: 6px;
+}
+.storehouseDiv{
+	width:70%;
+	display: inline-block;
+}
+select{
+	width:100%;
+}
+option{
+	text-align: center;
+}
+.empButton{
+	width:60%;
+}
+.addComment{
+	text-align: center;
+}
+.comment{
+	font-size: 18px;
+	border:1px;
+	border-radius: 5px;
+	background-color: #CBCBCB;
+	padding:5px;
+}
+.emp{
+	background: #CBCBCB;
+	border:1px;
+	border-radius:10px;
+	padding: 5px;
+}
+.emptable{
+	min-width:300px;
+	width: 300px;
+	margin: 0 auto;
+}
+.emptable td:nth-child(1){
+	text-align: left;
+	font-weight: bold;
+}
+.emptable td{
+	padding: 5px;
+	font-size:18px;
+}
+.employeeDiv{
+	display: inline-block;
+}
+.btn{
+	text-transform: uppercase;
+}
+.login{
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+.glyphicon-home{
+	font-size: 1.1em;
+}
+.companyBtn{
+	width:80%;
+	min-width: 200px;
+}
+.companyPanel{
+	min-width: 466px;
+}
+.company{
+	display: block !important;
+	margin:0 auto !important;
+	width:60% !important;
+}
+body{
+	background: rgba(149, 149, 149, 0.24) !important;
+}
+.errorDiv{
+	color:#930606;
+}
+.btn{
+	margin-bottom: 5px !important;
+}
+.loginForm{
+  width: 100%;
+  display:table-cell; 
+  vertical-align: middle;
+  text-align: center;
+}
+* {
+    font-family: monospace,tahoma, arial, verdana, sans-serif, Lucida Sans;
+    font-size: 14px;
+    outline: none !important;
+}
+html,body{
+	width:100%;
+	height: 100%;
+	margin:0;
+	padding: 0;
+}

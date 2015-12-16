@@ -1,0 +1,179 @@
+<ng-include src="'templates/header.html'"></ng-include>
+<div ng-cloak ng-if="visible">
+	<div class="page-header">
+	  <h1>Storehouse</h1>
+	</div>
+	<div>
+	<button style="float:left" type="button" ng-if="canEdit" class="btn btn-info" data-toggle="modal" data-target="#addGroupModal">Add group</button>
+	<div style="clear:both"></div>
+	</div>
+	<div class="col-md-9" style="min-width:400px">
+		<div ng-repeat="group in groups" class="panel panel-default">
+	  		<div class="panel-heading">
+	  			<span style="text-transform:uppercase;font-weight:bolder;font-size:20px">{{group.group_name}}</span>
+	  		 	<small>{{group.classification_code}}</small>  <span style="font-size:20px"><b>Count</b>:{{group.countProduct}}</span>
+	  		 	<button ng-if="canEdit" style="float:right" data-toggle="modal" ng-click="setGroup(group.product_group_id)" data-target="#addProductModal" class="btn btn-primary">ADD PRODUCT</button>
+	  		 	<button ng-if="canEdit" style="float:right; margin-right:5px"  ng-click="deleteGroup(group.product_group_id)" class="btn btn-danger">REMOVE</button>
+	  		 </div>
+	  		 <div class="panel-body">
+		  		 <div class="product" ng-repeat="product in group.products">
+					<b>name</b>: <a href="#/product/{{product.product_id}}">{{product.product_name}}<br></a>
+					<b>price</b>: {{product.price}}<br>
+					<b>description</b>: {{product.description}}<br>
+					<button ng-if="canEdit" class="btn btn-danger" ng-click="deleteProduct(product.product_id)">remove</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3" >
+		<div class="panel panel-default">
+		  <div class="panel-heading">Countries
+		  	
+			<button ng-if="canEdit" ng-click="addCountry()" style="float:right" class="btn btn-info">Add</button>
+			<input type="text" class="form-control" style="width:40%;margin-right:15px;float:right" ng-model="newCountry">
+			
+			<div style="clear:both"></div>
+		  </div>
+		  <div class="panel-body">
+		  	<div ng-repeat="country in countries">
+		  		<span style="line-height:30px"><b>name</b> : {{country.name}}</span>
+		  		<button class="btn btn-danger btn-sm" style="float:right" ng-click="deleteCountry(country.country_id)"><span class="glyphicon glyphicon-remove"></span></button>
+		  		<div style="clear:both"></div>
+		  	</div>
+		  </div>
+		</div>
+		<div class="panel panel-default">
+		  <div class="panel-heading">Providers
+		  	
+			<button ng-if="canEdit" ng-click="addProvider()" style="float:right" class="btn btn-info">Add</button>
+			
+			<input type="text" style="width:40%;margin-right:15px;float:right" class="form-control" ng-model="newProvider">
+			<div style="clear:both"></div>
+		  </div>
+		  <div class="panel-body">
+		  	<div ng-repeat="provider in providers">
+		  		<span style="line-height:30px"><b>name</b> : {{provider.name}}</span>
+
+		  		<button class="btn btn-danger btn-sm" style="float:right" ng-click="deleteProvider(provider.provider_id)"><span class="glyphicon glyphicon-remove"></span></button>
+		  		<div style="clear:both"></div>
+		  	</div>
+		  </div>
+		</div>
+		<div class="panel panel-default">
+		  <div class="panel-heading">Consist
+		   
+			<button ng-if="canEdit" ng-click="addConsist()" style="float:right" class="btn btn-info">Add</button>
+			 <input type="text" class="form-control" style="width:40%;margin-right:15px;float:right" ng-model="newConsist">
+			<div style="clear:both"></div>
+		  </div>
+		  <div class="panel-body">
+		  	<div ng-repeat="item in consist">
+		  	<span style="line-height:30px"><b>name</b> : {{item.name}}</span>
+		  	<button class="btn btn-danger btn-sm" style="float:right" ng-click="deleteConsist(item.consist_id)"><span class="glyphicon glyphicon-remove"></span></button>
+		  	<div style="clear:both"></div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+	<div id="addProductModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close closeModal" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">New product</h4>
+	      </div>
+	      <div class="modal-body">
+				<form class="form-horizontal" ng-submit="addProduct(currentGroup)">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+						   	<div class="input-group">
+						        <span class="input-group-addon" id="name-addon">
+								  	<span class="glyphicon glyphicon-briefcase"></span>
+								</span>
+								<input type="text" required class="form-control" id="name" aria-describedby="name-addon" ng-model="newProduct.name" placeholder="name">
+
+							</div>
+							<div class="errorDiv" ng-if="nameError">Name is already taken</div>
+						</div>
+				    </div>
+					<div class="form-group">
+						<label for="date" class="col-sm-2 control-label">Price</label>
+						<div class="col-sm-10">
+						   	<div class="input-group">
+								<span class="input-group-addon" id="price-addon">
+								  	<span class="glyphicon glyphicon-euro"></span>
+						    	</span>
+						      	<input type="number" required class="form-control" id="price" aria-describedby="price-addon" ng-model="newProduct.price" placeholder="price">
+					      	</div>
+					    </div>
+					</div>
+					<div class="form-group">
+						<label for="date" class="col-sm-2 control-label">Description</label>
+						<div class="col-sm-10">
+						      	<input type="text" required class="form-control" id="description" ng-model="newProduct.description" placeholder="description">
+					    </div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+						    <button type="submit" class="btn btn-primary">Add product</button>
+						</div>
+					</div>
+				</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+	<div id="addGroupModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close closeModal" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">New group</h4>
+	      </div>
+	      <div class="modal-body">
+				<form class="form-horizontal" ng-submit="addGroup()">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+						   	<div class="input-group">
+						        <span class="input-group-addon" id="name-addon">
+								  	<span class="glyphicon glyphicon-briefcase"></span>
+								</span>
+								<input type="text" required class="form-control" id="name" aria-describedby="name-addon" ng-model="newGroup.name" placeholder="name">
+
+							</div>
+						</div>
+				    </div>
+					<div class="form-group">
+						<label for="date" class="col-sm-2 control-label">Code</label>
+						<div class="col-sm-10">
+						   	<div class="input-group">
+								<span class="input-group-addon" id="bar-addon">
+								  	<span class="glyphicon glyphicon-barcode"></span>
+						    	</span>
+						      	<input type="text" required class="form-control" id="code" aria-describedby="bar-addon" ng-model="newGroup.code" placeholder="code">
+					      	</div>
+					      	<div class="errorDiv" ng-if="nameError">Name OR Code are already taken</div>
+					    </div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+						    <button type="submit" class="btn btn-primary">Add product group</button>
+						</div>
+					</div>
+				</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+
+</div>
